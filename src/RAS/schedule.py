@@ -171,52 +171,69 @@ class schedule:
         if self.exclude == True:
             tasks = [x for x in tasks if x not in self.to_be_excluded]
 
-        print("REST FOR:")
-        for tsk in self.sort_tasks(tasks, self.rest_int, True): 
-            if self.data[tsk][self.rest_int] != "":
-                if int(self.data[tsk][self.rest_int]) > 1:
-                    print(f"{self.data[tsk][self.rest_int]} more days: {tsk}")
-                elif int(self.data[tsk][self.rest_int]) == 1:
-                    print(f"{self.data[tsk][self.rest_int]} more day: {tsk}")
-        print("\n")
-
-        print("DUE IN:")
-        for tsk in self.sort_tasks(tasks, self.due_int, True):  
-            if self.data[tsk][self.due_int] != "":
-                if int(self.data[tsk][self.due_int]) > 1:
-                    print(f"{self.data[tsk][self.due_int]} days: {tsk}")
-                elif int(self.data[tsk][self.due_int]) == 1:
-                    print(f"{self.data[tsk][self.due_int]} day: {tsk}")
-        print("\n")
-
-        print("DUE TODAY:")
-        for tsk in tasks:
-            if self.data[tsk][self.due_int] != "":
-                if int(self.data[tsk][self.due_int]) == 0 & int(self.data[tsk][self.overdue_int]) <= 0:
-                    print(f"{tsk}")
-        print("\n")
-
-        print("OVERDUE SINCE:")
-        for tsk in self.sort_tasks(tasks, self.overdue_int, False):
-            if self.data[tsk][self.overdue_int] != "":
-                if int(self.data[tsk][self.overdue_int]) > 1:
-                    print(f"{int(self.data[tsk][self.overdue_int])} days: {tsk}")
-                elif int(self.data[tsk][self.overdue_int]) == 1:
-                    print(f"{int(self.data[tsk][self.overdue_int])} day: {tsk}")
-
-        if self.exclude == True:
-            with open(self.p_d + self.f_h, "r") as f:
-                unabridged_dict = json.load(f)
-            for key in unabridged_dict.keys():
-                if key not in self.data:
-                    self.data[key] = unabridged_dict[key]
-            with open(self.p_d + self.f_d, "w") as f:
-                json.dump(self.data, f) 
-        if self.exclude == False:
-            with open(self.p_d + self.f_d, "w") as f:
-                json.dump(self.data, f) 
+        try: 
+            for tsk in tasks:
+                self.data[tsk]
         
-        print("\n")
+        except Exception as e:
+            print(f"The newly added {e} does not exist in data.json yet.")
+            
+            user_input = input("\nCan data.json be deleted and recreated from scratch, i.e., is history.json up to date? (y/n): ")
+
+            if user_input.lower() == "y":
+                print("\n")
+                os.remove(self.p_d + self.f_d)
+                print('Please rerun "python3 src/RAS/main.py":\n')
+                sys.exit()        
+
+        else: 
+
+            print("REST FOR:")
+            for tsk in self.sort_tasks(tasks, self.rest_int, True): 
+                if self.data[tsk][self.rest_int] != "":
+                    if int(self.data[tsk][self.rest_int]) > 1:
+                        print(f"{self.data[tsk][self.rest_int]} more days: {tsk}")
+                    elif int(self.data[tsk][self.rest_int]) == 1:
+                        print(f"{self.data[tsk][self.rest_int]} more day: {tsk}")
+            print("\n")
+
+            print("DUE IN:")
+            for tsk in self.sort_tasks(tasks, self.due_int, True):  
+                if self.data[tsk][self.due_int] != "":
+                    if int(self.data[tsk][self.due_int]) > 1:
+                        print(f"{self.data[tsk][self.due_int]} days: {tsk}")
+                    elif int(self.data[tsk][self.due_int]) == 1:
+                        print(f"{self.data[tsk][self.due_int]} day: {tsk}")
+            print("\n")
+
+            print("DUE TODAY:")
+            for tsk in tasks:
+                if self.data[tsk][self.due_int] != "":
+                    if int(self.data[tsk][self.due_int]) == 0 & int(self.data[tsk][self.overdue_int]) <= 0:
+                        print(f"{tsk}")
+            print("\n")
+
+            print("OVERDUE SINCE:")
+            for tsk in self.sort_tasks(tasks, self.overdue_int, False):
+                if self.data[tsk][self.overdue_int] != "":
+                    if int(self.data[tsk][self.overdue_int]) > 1:
+                        print(f"{int(self.data[tsk][self.overdue_int])} days: {tsk}")
+                    elif int(self.data[tsk][self.overdue_int]) == 1:
+                        print(f"{int(self.data[tsk][self.overdue_int])} day: {tsk}")
+
+            if self.exclude == True:
+                with open(self.p_d + self.f_h, "r") as f:
+                    unabridged_dict = json.load(f)
+                for key in unabridged_dict.keys():
+                    if key not in self.data:
+                        self.data[key] = unabridged_dict[key]
+                with open(self.p_d + self.f_d, "w") as f:
+                    json.dump(self.data, f) 
+            if self.exclude == False:
+                with open(self.p_d + self.f_d, "w") as f:
+                    json.dump(self.data, f) 
+            
+            print("\n")
 
     def save_history(self):
         user_input = input("Overwrite history.json? (y/n): ")

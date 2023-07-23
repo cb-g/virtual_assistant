@@ -46,6 +46,10 @@ class template:
                   "min: int": 14,
                   "max: int": 21,
                   },
+            "activity J": {
+                  "min: int": 3,
+                  "max: int": 7,
+                  },
         }
 
         keys_to_add = [
