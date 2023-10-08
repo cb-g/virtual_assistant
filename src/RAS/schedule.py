@@ -96,9 +96,9 @@ class schedule:
             for i, tsk in enumerate(tasks):
                 print(f"{i+1}: {tsk}")
                 string_dict[i+1] = tsk
-            print('\n(Enter "p" to proceed)')
+            print('\n(enter "p" to proceed)')
             print("___________________________")
-            user_input = input("\nWhich one did you do today? Enter number:\n\n")
+            user_input = input("\nwhich one did you do today? enter number:\n\n")
 
             if user_input.lower() == "p":
                 print("\n")
@@ -109,28 +109,23 @@ class schedule:
 
             print("\n")
 
-        for element in my_list: 
-            try:
+        try: 
+            for element in my_list: 
                 self.data[element][self.last_date] = self.date_to_string(date.today())
-            except KeyError:
-                user_input = input("A key couldn't be found. Overwrite history.json before deleting data.json? (y/n): ")
 
-                if user_input.lower() == "y":
-                    with open(self.p_d + self.f_h, "w") as f:
-                        json.dump(self.data, f)
-                    print("\n")
+        except Exception as e:
+            print(f"the newly added activity {e} does not exist in data.json yet")
+            
+            user_input = input("\ncan data.json be deleted and recreated from scratch, i.e., is history.json up to date? (y/n)\n")
 
-                    os.remove(self.p_d + self.f_d)
+            if user_input.lower() == "y":
+                print("\n")
+                os.remove(self.p_d + self.f_d)
+                print("now, run main.py again\n")
+                sys.exit()        
 
-                    with open(self.p_d + self.f_t, "r") as f:
-                        self.data = json.load(f)
-                    
-                    self.read_history(dict = self.data)
-                
-                else:
-                    sys.exit()
-
-        subset = {key: value for key, value in self.data.items() if key in tasks}
+        else: 
+            subset = {key: value for key, value in self.data.items() if key in tasks}
 
         for tsk in subset.keys():
             if subset[tsk][self.last_date] != "":
@@ -176,50 +171,58 @@ class schedule:
                 self.data[tsk]
         
         except Exception as e:
-            print(f"The newly added {e} does not exist in data.json yet.")
+            print(f"the newly added {e} does not exist in data.json yet.")
             
-            user_input = input("\nCan data.json be deleted and recreated from scratch, i.e., is history.json up to date? (y/n): ")
+            user_input = input("\ncan data.json be deleted and recreated from scratch, i.e., is history.json up to date? (y/n): ")
 
             if user_input.lower() == "y":
                 print("\n")
                 os.remove(self.p_d + self.f_d)
-                print('Please rerun "python3 src/RAS/main.py":\n')
+                print('please rerun "python3 src/RAS/main.py":\n')
                 sys.exit()        
 
         else: 
 
-            print("REST FOR:")
-            for tsk in self.sort_tasks(tasks, self.rest_int, True): 
-                if self.data[tsk][self.rest_int] != "":
-                    if int(self.data[tsk][self.rest_int]) > 1:
-                        print(f"{self.data[tsk][self.rest_int]} more days: {tsk}")
-                    elif int(self.data[tsk][self.rest_int]) == 1:
-                        print(f"{self.data[tsk][self.rest_int]} more day: {tsk}")
-            print("\n")
+            # print("rest for:")
+            # for tsk in self.sort_tasks(tasks, self.rest_int, True): 
+            #     if self.data[tsk][self.rest_int] != "":
+            #         if int(self.data[tsk][self.rest_int]) > 1:
+            #             print(f"{self.data[tsk][self.rest_int]} more days: {tsk}")
+            #         elif int(self.data[tsk][self.rest_int]) == 1:
+            #             print(f"{self.data[tsk][self.rest_int]} more day: {tsk}")
+            # print("\n")
 
-            print("DUE IN:")
-            for tsk in self.sort_tasks(tasks, self.due_int, True):  
-                if self.data[tsk][self.due_int] != "":
-                    if int(self.data[tsk][self.due_int]) > 1:
-                        print(f"{self.data[tsk][self.due_int]} days: {tsk}")
-                    elif int(self.data[tsk][self.due_int]) == 1:
-                        print(f"{self.data[tsk][self.due_int]} day: {tsk}")
-            print("\n")
+            # print("due in:")
+            # for tsk in self.sort_tasks(tasks, self.due_int, True):  
+            #     if self.data[tsk][self.due_int] != "":
+            #         if int(self.data[tsk][self.due_int]) > 1:
+            #             print(f"{self.data[tsk][self.due_int]} days: {tsk}")
+            #         elif int(self.data[tsk][self.due_int]) == 1:
+            #             print(f"{self.data[tsk][self.due_int]} day: {tsk}")
+            # print("\n")
 
-            print("DUE TODAY:")
-            for tsk in tasks:
-                if self.data[tsk][self.due_int] != "":
-                    if int(self.data[tsk][self.due_int]) == 0 & int(self.data[tsk][self.overdue_int]) <= 0:
-                        print(f"{tsk}")
-            print("\n")
+            # print("due today:")
+            # for tsk in tasks:
+            #     if self.data[tsk][self.due_int] != "":
+            #         if int(self.data[tsk][self.due_int]) == 0 & int(self.data[tsk][self.overdue_int]) <= 0:
+            #             print(f"{tsk}")
+            # print("\n")
 
-            print("OVERDUE SINCE:")
-            for tsk in self.sort_tasks(tasks, self.overdue_int, False):
-                if self.data[tsk][self.overdue_int] != "":
-                    if int(self.data[tsk][self.overdue_int]) > 1:
-                        print(f"{int(self.data[tsk][self.overdue_int])} days: {tsk}")
-                    elif int(self.data[tsk][self.overdue_int]) == 1:
-                        print(f"{int(self.data[tsk][self.overdue_int])} day: {tsk}")
+            # print("overdue since:")
+            # for tsk in self.sort_tasks(tasks, self.overdue_int, False):
+            #     if self.data[tsk][self.overdue_int] != "":
+            #         if int(self.data[tsk][self.overdue_int]) > 1:
+            #             print(f"{int(self.data[tsk][self.overdue_int])} days: {tsk}")
+            #         elif int(self.data[tsk][self.overdue_int]) == 1:
+            #             print(f"{int(self.data[tsk][self.overdue_int])} day: {tsk}")
+
+            print("done the last time on:\n")
+            for tsk in self.sort_tasks(tasks, self.last_date, True):
+                print(f"{self.data[tsk][self.last_date]}: {tsk}")
+
+            print("\n___________________________\n\ndone x days ago:\n")
+            for tsk in self.sort_tasks(tasks, self.last_int, False):
+                print(f"{self.data[tsk][self.last_int]}: {tsk}")
 
             if self.exclude == True:
                 with open(self.p_d + self.f_h, "r") as f:
@@ -236,7 +239,7 @@ class schedule:
             print("\n")
 
     def save_history(self):
-        user_input = input("Overwrite history.json? (y/n): ")
+        user_input = input("overwrite history.json? (y/n): ")
 
         if self.exclude == False:
             if user_input.lower() == "y":
