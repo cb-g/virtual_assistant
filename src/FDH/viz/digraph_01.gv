@@ -1,13 +1,26 @@
 digraph G {
-	node [color=darkgray fontcolor=black shape=box style=solid]
-	"node 00 "
-	node [color=darkgray fontcolor=black shape=box style=solid]
-	"node 01 "
-	node [color=lightgray fontcolor=black shape=box style=filled]
-	"node 02 "
-	node [color=lightgray fontcolor=black shape=box style=filled]
-	"node 03 "
-	"node 00 " -> "node 02 "
-	"node 00 " -> "node 01 "
-	"node 01 " -> "node 03 "
+	node [color=darkgray fontcolor=black fontname="Times-Roman" shape=egg style=solid]
+	"1 "
+	node [color=darkgray fontcolor=black fontname="Times-Roman" shape=egg style=solid]
+	"3 "
+	node [color=darkgray fontcolor=black fontname="Times-Roman" shape=egg style=solid]
+	"5 "
+	node [color=darkgray fontcolor=black fontname="Times-Roman" shape=egg style=solid]
+	"7 "
+	node [color=bisque2 fontcolor=black fontname="Times-Roman" shape=trapezium style=filled]
+	"2 "
+	node [color=bisque2 fontcolor=black fontname="Times-Roman" shape=trapezium style=filled]
+	"4 "
+	node [color=bisque2 fontcolor=black fontname="Times-Roman" shape=trapezium style=filled]
+	"6 "
+	edge [arrowhead=normal color=black]
+	"1 " -> "2 "
+	edge [arrowhead=normal color=black]
+	"2 " -> "3 "
+	edge [arrowhead=diamond color=burlywood4]
+	"4 " -> "5 "
+	edge [arrowhead=diamond color=burlywood4]
+	"5 " -> "6 "
+	edge [arrowhead=diamond color=burlywood4]
+	"6 " -> "7 "
 }
