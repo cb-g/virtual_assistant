@@ -1,0 +1,13 @@
+digraph G {
+	node [color=darkgray fontcolor=black shape=box style=solid]
+	"node 00 "
+	node [color=darkgray fontcolor=black shape=box style=solid]
+	"node 01 "
+	node [color=lightgray fontcolor=black shape=box style=filled]
+	"node 02 "
+	node [color=lightgray fontcolor=black shape=box style=filled]
+	"node 03 "
+	"node 00 " -> "node 02 "
+	"node 00 " -> "node 01 "
+	"node 01 " -> "node 03 "
+}

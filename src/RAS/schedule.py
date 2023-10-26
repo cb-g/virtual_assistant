@@ -94,7 +94,7 @@ class schedule:
         string_dict = {}
         while True:
             for i, tsk in enumerate(tasks):
-                print(f"{i+1}: {tsk}")
+                print(f"{i+1}: {tsk}\n")
                 string_dict[i+1] = tsk
             print('\n(enter "p" to proceed)')
             print("___________________________")
@@ -218,11 +218,11 @@ class schedule:
 
             print("done the last time on:\n")
             for tsk in self.sort_tasks(tasks, self.last_date, True):
-                print(f"{self.data[tsk][self.last_date]}: {tsk}")
+                print(f"{self.data[tsk][self.last_date]}: {tsk}\n")
 
             print("\n___________________________\n\ndone x days ago:\n")
             for tsk in self.sort_tasks(tasks, self.last_int, False):
-                print(f"{self.data[tsk][self.last_int]}: {tsk}")
+                print(f"{self.data[tsk][self.last_int]}: {tsk}\n")
 
             if self.exclude == True:
                 with open(self.p_d + self.f_h, "r") as f:

@@ -16,3 +16,9 @@ python3 src/RAS/main.py
 ```zsh
 python3 src/TDL/main.py
 ```
+
+### Flow Diagram Helper (FDH)
+
+```zsh
+python3 src/FDH/main.py
+```
